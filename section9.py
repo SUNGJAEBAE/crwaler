@@ -1,22 +1,17 @@
-# requests 사용 스크래핑
+import json
 import requests
 
-s = requests.Session()
-
-r = s.get('https://httpbin.org/cookies', cookies={'name': 'kim'})
-print(r.text)
-
-r2 = s.get('https://httpbin.org/cookies/set', cookies={'name': 'kim2'})
-print(r2.text)
-
-url = 'https://httpbin.org'
-
-headers = {'user-agent': 'nice-man_1.0.0_win10_ram16_home_chrome'}
-r3 = s.get(url, headers=headers, cookies={'name': 'bae'})
-print(r3.text)
-
-s.close()
-
 with requests.Session() as s:
-    r = s.get('https://daum.net')
-    print(r.ok)
+    r = s.get('https://httpbin.org/stream/100', stream=True)
+
+    print(r.text)
+    print(f'Encoding : {r.encoding}')
+    if r.encoding is None:
+        r.encoding = 'UTF-8'
+    for line in r.iter_lines(decode_unicode=True):
+        # print(line)
+        # print(type(line))
+        b = json.loads(line)  # str->dict
+        for k, v in b.items():
+            print(f'key:{k}, value:{v}')
+        print()

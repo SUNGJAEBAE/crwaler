@@ -1,9 +1,4 @@
-arr = ['asdf', 'dddd', 'portal']
-
-
-def findi(arr, target):
-    for i, value in enumerate(arr):
-        if value == target:
-            return i+1
-
-    return -1
+import os
+savepath = 'C:/Users/hsm01/Desktop/web/crawl/result'
+print(os.path.isdir(savepath))
+print(os.path.join(savepath))
